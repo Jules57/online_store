@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import os
+import dotenv
 from pathlib import Path
 from django.utils.translation import gettext_lazy as _
 
@@ -19,8 +21,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-mni1ap!z7p=(x8uz*+h015qsp+=rg^$&m&6y0!h0@lrj6@6m^a'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -157,9 +163,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # setting parameters for Stripe
 STRIPE_PUBLISHABLE_KEY = 'pk_test_51NTnTeDONPBsDVjPyT4yYRIeffOI3MSURaDeCf1B1YoHZfojREooYOW6Qv41ixSlw3lG5DGMKZVTAu2kfsuzZ9iU00SD6QuRMx'
-STRIPE_SECRET_KEY = 'sk_test_51NTnTeDONPBsDVjPXYmyiYKqNBH0LliAnGsj470X1YdyMhoKhfh83bAdpDKIt8fHtefCIShO0rhGS3Ozc77r63h000WTCJfUnX'
+STRIPE_SECRET_KEY = os.environ['STRIPE_SECRET_KEY']
 STRIPE_API_VERSION = '2022-11-15'
-STRIPE_WEBHOOK_SECRET = 'whsec_a045dc392c14acb76fe575dfa71328a055e07d613a249df98f3db20aa37f3da0'
+STRIPE_WEBHOOK_SECRET = os.environ['STRIPE_WEBHOOK_SECRET']
 
 # Redis settings
 REDIS_HOST = 'localhost'
